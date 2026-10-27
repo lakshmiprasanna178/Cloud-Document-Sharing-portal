@@ -1,0 +1,446 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudShare - Document Sharing Portal</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fc;
+            color: #26334d;
+        }
+
+        header {
+            background: #253b80;
+            color: white;
+            padding: 22px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        header h1 {
+            font-size: 27px;
+        }
+
+        header p {
+            margin-top: 6px;
+            color: #d9e3ff;
+            font-size: 13px;
+        }
+
+        .profile {
+            background: white;
+            color: #253b80;
+            padding: 11px 17px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 85vh;
+        }
+
+        aside {
+            width: 220px;
+            background: white;
+            padding: 30px 20px;
+            box-shadow: 2px 0 8px #00000008;
+        }
+
+        aside h3 {
+            font-size: 13px;
+            color: #929caf;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        aside a {
+            display: block;
+            text-decoration: none;
+            color: #526078;
+            padding: 13px;
+            margin-bottom: 8px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        aside a:hover,
+        aside a.active {
+            background: #e9edff;
+            color: #253b80;
+            font-weight: bold;
+        }
+
+        main {
+            flex: 1;
+            padding: 32px;
+            min-width: 0;
+        }
+
+        .welcome {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .welcome h2 {
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #7a859a;
+            font-size: 14px;
+        }
+
+        .upload-btn {
+            background: #4059c7;
+            color: white;
+            padding: 13px 18px;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .upload-btn:hover {
+            background: #253b80;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000008;
+            border-bottom: 4px solid #6578df;
+        }
+
+        .stat-card p {
+            color: #7a859a;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card h2 {
+            font-size: 30px;
+            color: #253b80;
+        }
+
+        .documents {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000008;
+            overflow-x: auto;
+        }
+
+        .documents h2 {
+            margin-bottom: 22px;
+            font-size: 21px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th {
+            background: #f4f6fb;
+            color: #657087;
+            text-align: left;
+            padding: 15px;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 17px 15px;
+            border-bottom: 1px solid #edf0f5;
+            font-size: 13px;
+        }
+
+        .file {
+            font-weight: bold;
+            color: #34466d;
+        }
+
+        .type {
+            color: #7a859a;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 7px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .shared {
+            background: #e1f8e9;
+            color: #16804a;
+        }
+
+        .private {
+            background: #fff0cf;
+            color: #9a6900;
+        }
+
+        .view-btn {
+            display: inline-block;
+            color: #4059c7;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .view-btn:hover {
+            text-decoration: underline;
+        }
+
+        .bottom-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 23px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000008;
+        }
+
+        .info-card h3 {
+            margin-bottom: 15px;
+        }
+
+        .info-card p {
+            color: #7a859a;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        footer {
+            text-align: center;
+            color: #8993a6;
+            padding: 22px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 900px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            aside {
+                width: 100%;
+                padding: 15px;
+            }
+
+            aside h3 {
+                margin: 5px 10px 10px;
+            }
+
+            aside a {
+                display: inline-block;
+                margin-bottom: 0;
+            }
+
+            main {
+                padding: 22px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 550px) {
+            header {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+
+            main {
+                padding: 15px;
+            }
+
+            .stats,
+            .bottom-section {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome h2 {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div>
+            <h1>☁ CloudShare</h1>
+            <p>Cloud-Based Document Sharing Portal</p>
+        </div>
+
+        <div class="profile">👤 Alex Morgan</div>
+    </header>
+
+    <div class="layout">
+
+        <aside>
+            <h3>Workspace</h3>
+            <a href="#dashboard" class="active">🏠 Dashboard</a>
+            <a href="#documents">📁 My Documents</a>
+            <a href="#shared">🔗 Shared Files</a>
+            <a href="#storage">☁ Storage</a>
+        </aside>
+
+        <main id="dashboard">
+
+            <section class="welcome">
+                <div>
+                    <h2>My Workspace</h2>
+                    <p>Manage, organize, and share your documents in one place.</p>
+                </div>
+
+                <a href="#upload" class="upload-btn">+ Upload Document</a>
+            </section>
+
+            <section class="stats">
+
+                <div class="stat-card">
+                    <p>📁 Total Documents</p>
+                    <h2>128</h2>
+                </div>
+
+                <div class="stat-card">
+                    <p>🔗 Shared Documents</p>
+                    <h2>36</h2>
+                </div>
+
+                <div class="stat-card" id="storage">
+                    <p>☁ Cloud Storage Used</p>
+                    <h2>6.4 GB</h2>
+                </div>
+
+            </section>
+
+            <section class="documents" id="documents">
+                <h2>Recent Documents</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Document Name</th>
+                            <th>File Type</th>
+                            <th>Last Modified</th>
+                            <th>Access</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td class="file">📄 Project_Report.pdf</td>
+                            <td class="type">PDF Document</td>
+                            <td>26 Oct 2026</td>
+                            <td><span class="badge shared">Shared</span></td>
+                            <td><a href="#shared" class="view-btn">View</a></td>
+                        </tr>
+
+                        <tr>
+                            <td class="file">📊 Monthly_Report.xlsx</td>
+                            <td class="type">Excel Sheet</td>
+                            <td>25 Oct 2026</td>
+                            <td><span class="badge private">Private</span></td>
+                            <td><a href="#documents" class="view-btn">View</a></td>
+                        </tr>
+
+                        <tr>
+                            <td class="file">📝 Meeting_Notes.docx</td>
+                            <td class="type">Word Document</td>
+                            <td>24 Oct 2026</td>
+                            <td><span class="badge shared">Shared</span></td>
+                            <td><a href="#shared" class="view-btn">View</a></td>
+                        </tr>
+
+                        <tr>
+                            <td class="file">📽 Presentation.pptx</td>
+                            <td class="type">PowerPoint</td>
+                            <td>22 Oct 2026</td>
+                            <td><span class="badge private">Private</span></td>
+                            <td><a href="#documents" class="view-btn">View</a></td>
+                        </tr>
+
+                        <tr>
+                            <td class="file">📄 Assignment.pdf</td>
+                            <td class="type">PDF Document</td>
+                            <td>20 Oct 2026</td>
+                            <td><span class="badge shared">Shared</span></td>
+                            <td><a href="#shared" class="view-btn">View</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="bottom-section">
+
+                <div class="info-card" id="shared">
+                    <h3>🔗 Shared With Me</h3>
+                    <p>
+                        Documents shared by your team members can be organized
+                        and accessed from a central workspace.
+                    </p>
+                </div>
+
+                <div class="info-card" id="upload">
+                    <h3>☁ Document Upload</h3>
+                    <p>
+                        Upload, organize, and share important files from one
+                        convenient dashboard. Connect cloud storage to enable
+                        real file uploads.
+                    </p>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        © 2026 CloudShare | Cloud-Based Document Sharing Portal
+    </footer>
+
+</body>
+</html>
+```
